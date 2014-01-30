@@ -1,6 +1,5 @@
 require 'twitter/request'
 require 'twitter/rest/utils'
-require 'twitter/rest/response/parse_error_json'
 require 'twitter/token'
 
 module Twitter
@@ -24,9 +23,12 @@ module Twitter
       #   client = Twitter::REST::Client.new(:consumer_key => "abc", :consumer_secret => 'def')
       #   bearer_token = client.token
       def token(options = {})
-        options[:bearer_token_request] = true
         options[:grant_type] ||= 'client_credentials'
-        perform_with_object(:post, '/oauth2/token', options, Twitter::Token)
+        headers = {}
+        headers[:accept]        = '*/*'
+        headers[:authorization] = "Basic #{strict_encode64("#{@consumer_key}:#{@consumer_secret}")}"
+        response = HTTP.with(headers).post('https://api.twitter.com/oauth2/token', :form => options)
+        Twitter::Token.new(response.parse)
       end
       alias_method :bearer_token, :token
 
@@ -53,12 +55,17 @@ module Twitter
       # @raise [Twitter::Error::Unauthorized] Error raised when supplied user credentials are not valid.
       # @return [String] The token string.
       def reverse_token
-        conn = connection.dup
-        conn.builder.swap(4, Twitter::REST::Response::ParseErrorJson)
-        response = conn.post('/oauth/request_token?x_auth_mode=reverse_auth') do |request|
-          request.headers[:authorization] = oauth_auth_header(:post, 'https://api.twitter.com/oauth/request_token', :x_auth_mode => 'reverse_auth').to_s
-        end
-        response.body
+        uri = 'https://api.twitter.com/oauth/request_token'
+        options = {:x_auth_mode => 'reverse_auth'}
+        headers = {:authorization => oauth_auth_header(:post, uri, options).to_s}
+        HTTP.with(headers).post(uri, :params => options).to_s
+      end
+
+    private
+
+      # Base64.strict_encode64 is not available on Ruby 1.8.7
+      def strict_encode64(str)
+        Base64.encode64(str).gsub("\n", '')
       end
     end
   end

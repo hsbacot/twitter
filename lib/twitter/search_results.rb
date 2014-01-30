@@ -48,7 +48,7 @@ module Twitter
 
     # @return [Hash]
     def fetch_next_page
-      response = @client.send(@request_method, @path, next_page).body
+      response = @client.send(@request_method, @path, next_page)
       self.attrs = response
     end
 

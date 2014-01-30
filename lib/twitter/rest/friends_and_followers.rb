@@ -263,7 +263,7 @@ module Twitter
       # @return [Array<Integer>]
       # @param options [Hash] A customizable set of options.
       def no_retweet_ids(options = {})
-        get('/1.1/friendships/no_retweets/ids.json', options).body.collect(&:to_i)
+        get('/1.1/friendships/no_retweets/ids.json', options).collect(&:to_i)
       end
       alias_method :no_retweets_ids, :no_retweet_ids
     end

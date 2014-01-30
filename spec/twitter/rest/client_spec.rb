@@ -122,16 +122,6 @@ describe Twitter::REST::Client do
     end
   end
 
-  describe '#connection' do
-    it 'looks like Faraday connection' do
-      expect(@client.send(:connection)).to respond_to(:run_request)
-    end
-    it 'memoizes the connection' do
-      c1, c2 = @client.send(:connection), @client.send(:connection)
-      expect(c1.object_id).to eq(c2.object_id)
-    end
-  end
-
   describe '#request' do
     it 'encodes the entire body when no uploaded media is present' do
       stub_post('/1.1/statuses/update.json').with(:body => {:status => 'Update'}).to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
@@ -142,22 +132,6 @@ describe Twitter::REST::Client do
       stub_post('/1.1/statuses/update_with_media.json').to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       @client.update_with_media('Update', fixture('pbjt.gif'))
       expect(a_post('/1.1/statuses/update_with_media.json')).to have_been_made
-    end
-    it 'catches and reraises Faraday timeout errors' do
-      allow(@client).to receive(:connection).and_raise(Faraday::Error::TimeoutError.new('execution expired'))
-      expect { @client.send(:request, :get, '/path') }.to raise_error(Twitter::Error::RequestTimeout)
-    end
-    it 'catches and reraises Timeout errors' do
-      allow(@client).to receive(:connection).and_raise(Timeout::Error.new('execution expired'))
-      expect { @client.send(:request, :get, '/path') }.to raise_error(Twitter::Error::RequestTimeout)
-    end
-    it 'catches and reraises Faraday client errors' do
-      allow(@client).to receive(:connection).and_raise(Faraday::Error::ClientError.new('connection failed'))
-      expect { @client.send(:request, :get, '/path') }.to raise_error(Twitter::Error)
-    end
-    it 'catches and reraises JSON::ParserError errors' do
-      allow(@client).to receive(:connection).and_raise(JSON::ParserError.new('unexpected token'))
-      expect { @client.send(:request, :get, '/path') }.to raise_error(Twitter::Error)
     end
   end
 
@@ -205,13 +179,6 @@ describe Twitter::REST::Client do
       client = Twitter::REST::Client.new(:bearer_token => token)
       authorization = client.send(:bearer_auth_header)
       expect(authorization).to eq('Bearer BT')
-    end
-  end
-
-  describe '#bearer_token_credentials_auth_header' do
-    it 'creates the correct auth header with supplied consumer_key and consumer_secret' do
-      authorization = @client.send(:bearer_token_credentials_auth_header)
-      expect(authorization).to eq('Basic Q0s6Q1M=')
     end
   end
 end

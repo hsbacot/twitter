@@ -32,7 +32,7 @@ module Twitter
       # @option options [String] :lang The language which Twitter should render in for this user. The language must be specified by the appropriate two letter ISO 639-1 representation. Currently supported languages are provided by {https://dev.twitter.com/docs/api/1.1/get/help/languages GET help/languages}.
       def settings(options = {})
         request_method = options.size.zero? ? :get : :post
-        response = send(request_method.to_sym, '/1.1/account/settings.json', options).body
+        response = send(request_method.to_sym, '/1.1/account/settings.json', options)
         # https://dev.twitter.com/issues/59
         response.update(:trend_location => response.fetch(:trend_location, []).first)
         Twitter::Settings.new(response)
@@ -333,7 +333,7 @@ module Twitter
       # @return [nil]
       # @param options [Hash] A customizable set of options.
       def remove_profile_banner(options = {})
-        post('/1.1/account/remove_profile_banner.json', options).body
+        post('/1.1/account/remove_profile_banner.json', options)
         true
       end
       deprecate_alias :profile_banner_remove, :remove_profile_banner
@@ -356,7 +356,7 @@ module Twitter
       # @option options [Integer] :offset_left The number of pixels by which to offset the uploaded image from the left. Use with height, width, and offset_top to select the desired region of the image to use.
       # @option options [Integer] :offset_top The number of pixels by which to offset the uploaded image from the top. Use with height, width, and offset_left to select the desired region of the image to use.
       def update_profile_banner(banner, options = {})
-        post('/1.1/account/update_profile_banner.json', options.merge(:banner => banner)).body
+        post('/1.1/account/update_profile_banner.json', options.merge(:banner => banner))
         true
       end
 

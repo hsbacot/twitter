@@ -28,7 +28,7 @@ module Twitter
       def search(q, options = {})
         options[:count] ||= MAX_TWEETS_PER_REQUEST
         request = Twitter::Request.new(self, :get, '/1.1/search/tweets.json', options.merge(:q => q))
-        response = get(request.path, request.options).body
+        response = get(request.path, request.options)
         Twitter::SearchResults.new(response, request)
       end
     end

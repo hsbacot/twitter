@@ -43,7 +43,7 @@ module Twitter
 
     # @return [Hash]
     def fetch_next_page
-      response = @client.send(@request_method, @path, @options.merge(:cursor => next_cursor)).body
+      response = @client.send(@request_method, @path, @options.merge(:cursor => next_cursor))
       self.attrs = response
     end
 

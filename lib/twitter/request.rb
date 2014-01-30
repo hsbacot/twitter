@@ -19,7 +19,7 @@ module Twitter
 
     # @return [Hash]
     def perform
-      @client.send(@request_method, @path, @options).body
+      @client.send(@request_method, @path, @options)
     end
 
     # @param klass [Class]
