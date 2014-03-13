@@ -328,7 +328,7 @@ describe Twitter::REST::FriendsAndFollowers do
       stub_post('/1.1/friendships/create.json').with(:body => {:user_id => '7505382'}).to_return(:body => fixture('sferik.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
     end
     it 'requests the correct resources' do
-      user = Twitter::User.new(:id => '7505382')
+      user = Twitter::User.new('id' => '7505382')
       @client.follow!(user)
       expect(a_post('/1.1/friendships/create.json').with(:body => {:user_id => '7505382'})).to have_been_made
     end
@@ -430,8 +430,8 @@ describe Twitter::REST::FriendsAndFollowers do
         stub_get('/1.1/friendships/show.json').with(:query => {:source_id => '7505382', :target_id => '14100886'}).to_return(:body => fixture('following.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        user1 = Twitter::User.new(:id => '7505382')
-        user2 = Twitter::User.new(:id => '14100886')
+        user1 = Twitter::User.new('id' => '7505382')
+        user2 = Twitter::User.new('id' => '14100886')
         @client.friendship(user1, user2)
         expect(a_get('/1.1/friendships/show.json').with(:query => {:source_id => '7505382', :target_id => '14100886'})).to have_been_made
       end
@@ -491,8 +491,8 @@ describe Twitter::REST::FriendsAndFollowers do
         stub_get('/1.1/friendships/show.json').with(:query => {:source_id => '7505382', :target_id => '14100886'}).to_return(:body => fixture('following.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        user1 = Twitter::User.new(:id => '7505382')
-        user2 = Twitter::User.new(:id => '14100886')
+        user1 = Twitter::User.new('id' => '7505382')
+        user2 = Twitter::User.new('id' => '14100886')
         @client.friendship?(user1, user2)
         expect(a_get('/1.1/friendships/show.json').with(:query => {:source_id => '7505382', :target_id => '14100886'})).to have_been_made
       end

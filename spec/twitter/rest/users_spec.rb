@@ -262,7 +262,7 @@ describe Twitter::REST::Users do
         stub_get('/1.1/blocks/ids.json').with(:query => {:cursor => '1305102810874389703'}).to_return(:body => fixture('ids_list2.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resources' do
-        user = Twitter::User.new(:id => '7505382')
+        user = Twitter::User.new('id' => '7505382')
         @client.block?(user)
         expect(a_get('/1.1/blocks/ids.json').with(:query => {:cursor => '-1'})).to have_been_made
         expect(a_get('/1.1/blocks/ids.json').with(:query => {:cursor => '1305102810874389703'})).to have_been_made
@@ -365,8 +365,8 @@ describe Twitter::REST::Users do
           stub_post('/1.1/users/lookup.json').with(:body => {:user_id => '7505382,14100886'}).to_return(:body => fixture('users.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
         end
         it 'requests the correct resource' do
-          user1 = Twitter::User.new(:id => '7505382')
-          user2 = Twitter::User.new(:id => '14100886')
+          user1 = Twitter::User.new('id' => '7505382')
+          user2 = Twitter::User.new('id' => '14100886')
           @client.users(user1, user2)
           expect(a_post('/1.1/users/lookup.json').with(:body => {:user_id => '7505382,14100886'})).to have_been_made
         end
@@ -434,8 +434,8 @@ describe Twitter::REST::Users do
           stub_get('/1.1/users/lookup.json').with(:query => {:user_id => '7505382,14100886'}).to_return(:body => fixture('users.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
         end
         it 'requests the correct resource' do
-          user1 = Twitter::User.new(:id => '7505382')
-          user2 = Twitter::User.new(:id => '14100886')
+          user1 = Twitter::User.new('id' => '7505382')
+          user2 = Twitter::User.new('id' => '14100886')
           @client.users(user1, user2, :method => :get)
           expect(a_get('/1.1/users/lookup.json').with(:query => {:user_id => '7505382,14100886'})).to have_been_made
         end
@@ -490,7 +490,7 @@ describe Twitter::REST::Users do
         stub_get('/1.1/users/show.json').with(:query => {:user_id => '7505382'}).to_return(:body => fixture('sferik.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        user = Twitter::User.new(:id => 7_505_382)
+        user = Twitter::User.new('id' => 7_505_382)
         @client.user(user)
         expect(a_get('/1.1/users/show.json').with(:query => {:user_id => '7505382'})).to have_been_made
       end
@@ -681,7 +681,7 @@ describe Twitter::REST::Users do
         banner = @client.profile_banner('sferik')
         expect(banner).to be_a Twitter::ProfileBanner
         expect(banner.sizes).to be_a Hash
-        expect(banner.sizes[:mobile].height).to eq(160)
+        expect(banner.sizes['mobile'].height).to eq(160)
       end
     end
     context 'with a user ID passed' do
@@ -707,7 +707,7 @@ describe Twitter::REST::Users do
         banner = @client.profile_banner
         expect(banner).to be_a Twitter::ProfileBanner
         expect(banner.sizes).to be_a Hash
-        expect(banner.sizes[:mobile].height).to eq(160)
+        expect(banner.sizes['mobile'].height).to eq(160)
       end
     end
   end

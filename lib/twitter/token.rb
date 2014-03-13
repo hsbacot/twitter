@@ -9,7 +9,7 @@ module Twitter
 
     # @return [Boolean]
     def bearer?
-      @attrs[:token_type] == BEARER_TYPE
+      @attrs['token_type'] == BEARER_TYPE
     end
     memoize :bearer?
   end

@@ -35,8 +35,8 @@ module Twitter
       # Define object methods from attributes
       #
       # @param klass [Symbol]
-      # @param key1 [Symbol]
-      # @param key2 [Symbol]
+      # @param key1 [String, Symbol]
+      # @param key2 [String, Symbol]
       def object_attr_reader(klass, key1, key2 = nil)
         define_attribute_method(key1, klass, key2)
         define_predicate_method(key1)
@@ -68,26 +68,26 @@ module Twitter
 
       # Dynamically define a method for a URI
       #
-      # @param key1 [Symbol]
-      # @param key2 [Symbol]
+      # @param key1 [String, Symbol]
+      # @param key2 [String, Symbol]
       def define_uri_method(key1, key2)
         define_method(key1) do ||
-          Addressable::URI.parse(@attrs[key2]) unless @attrs[key2].nil?
+          Addressable::URI.parse(@attrs[key2.to_s]) unless @attrs[key2.to_s].nil?
         end
         memoize(key1)
       end
 
       # Dynamically define a method for an attribute
       #
-      # @param key1 [Symbol]
+      # @param key1 [String, Symbol]
       # @param klass [Symbol]
-      # @param key2 [Symbol]
+      # @param key2 [String, Symbol]
       def define_attribute_method(key1, klass = nil, key2 = nil)
         define_method(key1) do ||
           if klass.nil?
-            @attrs[key1]
+            @attrs[key1.to_s]
           else
-            if @attrs[key1].nil?
+            if @attrs[key1.to_s].nil?
               NullObject.new
             else
               attrs = attrs_for_object(key1, key2)
@@ -104,18 +104,18 @@ module Twitter
       def deprecate_attribute_method(key)
         define_method(key) do ||
           warn "#{Kernel.caller.first}: [DEPRECATION] ##{key} is deprecated. Use ##{key}? instead."
-          @attrs[key]
+          @attrs[key.to_s]
         end
         memoize(key)
       end
 
       # Dynamically define a predicate method for an attribute
       #
-      # @param key1 [Symbol]
-      # @param key2 [Symbol]
+      # @param key1 [String, Symbol]
+      # @param key2 [String, Symbol]
       def define_predicate_method(key1, key2 = key1)
         define_method(:"#{key1}?") do ||
-          !@attrs[key2].nil? && @attrs[key2] != false
+          !@attrs[key2.to_s].nil? && @attrs[key2.to_s] != false
         end
         memoize(:"#{key1}?")
       end
@@ -141,12 +141,14 @@ module Twitter
 
   private
 
+    # @param key1 [String, Symbol]
+    # @param key2 [String, Symbol]
     def attrs_for_object(key1, key2 = nil)
       if key2.nil?
-        @attrs[key1]
+        @attrs[key1.to_s]
       else
         attrs = @attrs.dup
-        attrs.delete(key1).merge(key2 => attrs)
+        attrs.delete(key1.to_s).merge(key2.to_s => attrs)
       end
     end
   end

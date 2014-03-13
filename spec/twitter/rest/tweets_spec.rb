@@ -38,7 +38,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.retweets(tweet)
         expect(a_get('/1.1/statuses/retweets/25938088801.json')).to have_been_made
       end
@@ -91,7 +91,7 @@ describe Twitter::REST::Tweets do
       end
       context 'with a Tweet passed' do
         it 'requests the correct resource' do
-          tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+          tweet = Twitter::Tweet.new('id' => 25_938_088_801)
           @client.retweeters_of(tweet)
           expect(a_get('/1.1/statuses/retweets/25938088801.json')).to have_been_made
         end
@@ -127,7 +127,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.status(tweet)
         expect(a_get('/1.1/statuses/show/25938088801.json')).to have_been_made
       end
@@ -162,7 +162,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with Tweets passed' do
       it 'requests the correct resource' do
-        @client.statuses(Twitter::Tweet.new(:id => 25_938_088_801), Twitter::Tweet.new(:id => 91_151_181_040_201_728))
+        @client.statuses(Twitter::Tweet.new('id' => 25_938_088_801), Twitter::Tweet.new('id' => 91_151_181_040_201_728))
         expect(a_post('/1.1/statuses/lookup.json').with(:body => {:id => '25938088801,91151181040201728'})).to have_been_made
       end
     end
@@ -197,7 +197,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.destroy_status(tweet)
         expect(a_post('/1.1/statuses/destroy/25938088801.json')).to have_been_made
       end
@@ -235,7 +235,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with an in-reply-to status' do
       before do
-        @tweet = Twitter::Tweet.new(:id => 1)
+        @tweet = Twitter::Tweet.new('id' => 1)
         stub_post('/1.1/statuses/update.json').with(:body => {:status => "\"I hope you'll keep...building bonds of friendship that will enrich your lives &amp; enrich our world\" —FLOTUS in China, http://t.co/fxmuQN9JL9", :in_reply_to_status_id => '1'}).to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
@@ -254,7 +254,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a place' do
       before do
-        @place = Twitter::Place.new(:woeid => 'df51dec6f4ee2b2c')
+        @place = Twitter::Place.new('woeid' => 'df51dec6f4ee2b2c')
         stub_post('/1.1/statuses/update.json').with(:body => {:status => "\"I hope you'll keep...building bonds of friendship that will enrich your lives &amp; enrich our world\" —FLOTUS in China, http://t.co/fxmuQN9JL9", :place_id => 'df51dec6f4ee2b2c'}).to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
@@ -296,7 +296,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with an in-reply-to status' do
       before do
-        @tweet = Twitter::Tweet.new(:id => 1)
+        @tweet = Twitter::Tweet.new('id' => 1)
         stub_post('/1.1/statuses/update.json').with(:body => {:status => "\"I hope you'll keep...building bonds of friendship that will enrich your lives &amp; enrich our world\" —FLOTUS in China, http://t.co/fxmuQN9JL9", :in_reply_to_status_id => '1'}).to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
@@ -315,7 +315,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a place' do
       before do
-        @place = Twitter::Place.new(:woeid => 'df51dec6f4ee2b2c')
+        @place = Twitter::Place.new('woeid' => 'df51dec6f4ee2b2c')
         stub_post('/1.1/statuses/update.json').with(:body => {:status => "\"I hope you'll keep...building bonds of friendship that will enrich your lives &amp; enrich our world\" —FLOTUS in China, http://t.co/fxmuQN9JL9", :place_id => 'df51dec6f4ee2b2c'}).to_return(:body => fixture('status.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
@@ -373,7 +373,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.retweet(tweet)
         expect(a_post('/1.1/statuses/retweet/25938088801.json')).to have_been_made
       end
@@ -427,7 +427,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.retweet!(tweet)
         expect(a_post('/1.1/statuses/retweet/25938088801.json')).to have_been_made
       end
@@ -520,7 +520,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.oembed(tweet)
         expect(a_get('/1.1/statuses/oembed.json').with(:query => {:id => '25938088801'})).to have_been_made
       end
@@ -559,7 +559,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.oembeds(tweet)
         expect(a_get('/1.1/statuses/oembed.json').with(:query => {:id => '25938088801'})).to have_been_made
       end
@@ -604,7 +604,7 @@ describe Twitter::REST::Tweets do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.retweeters_ids(tweet)
         expect(a_get('/1.1/statuses/retweeters/ids.json').with(:query => {:id => '25938088801', :cursor => '-1'})).to have_been_made
       end

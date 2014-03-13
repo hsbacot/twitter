@@ -11,14 +11,14 @@ module Twitter
 
     # @return [Boolean]
     def entities?
-      !@attrs[:entities].nil? && @attrs[:entities].any? { |_, array| array.any? }
+      !@attrs['entities'].nil? && @attrs['entities'].any? { |_, array| array.any? }
     end
     memoize :entities?
 
     # @note Must include entities in your request for this method to work
     # @return [Array<Twitter::Entity::Hashtag>]
     def hashtags
-      entities(Entity::Hashtag, :hashtags)
+      entities(Entity::Hashtag, 'hashtags')
     end
     memoize :hashtags
 
@@ -31,8 +31,8 @@ module Twitter
     # @note Must include entities in your request for this method to work
     # @return [Array<Twitter::Media>]
     def media
-      extended_entities = entities(MediaFactory, :media, :extended_entities)
-      extended_entities.empty? ? entities(MediaFactory, :media) : extended_entities
+      extended_entities = entities(MediaFactory, 'media', 'extended_entities')
+      extended_entities.empty? ? entities(MediaFactory, 'media') : extended_entities
     end
     memoize :media
 
@@ -45,7 +45,7 @@ module Twitter
     # @note Must include entities in your request for this method to work
     # @return [Array<Twitter::Entity::Symbol>]
     def symbols
-      entities(Entity::Symbol, :symbols)
+      entities(Entity::Symbol, 'symbols')
     end
     memoize :symbols
 
@@ -72,7 +72,7 @@ module Twitter
     # @note Must include entities in your request for this method to work
     # @return [Array<Twitter::Entity::UserMention>]
     def user_mentions
-      entities(Entity::UserMention, :user_mentions)
+      entities(Entity::UserMention, 'user_mentions')
     end
     memoize :user_mentions
 
@@ -87,8 +87,8 @@ module Twitter
     # @param klass [Class]
     # @param key2 [Symbol]
     # @param key1 [Symbol]
-    def entities(klass, key2, key1 = :entities)
-      @attrs.fetch(key1.to_sym, {}).fetch(key2.to_sym, []).collect do |entity|
+    def entities(klass, key2, key1 = 'entities')
+      @attrs.fetch(key1.to_s, {}).fetch(key2.to_s, []).collect do |entity|
         klass.new(entity)
       end
     end

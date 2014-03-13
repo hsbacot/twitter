@@ -26,7 +26,7 @@ module Twitter
     # @param size [String, Symbol] The size of the image. Must be one of: 'mobile', 'mobile_retina', 'web', 'web_retina', 'ipad', or 'ipad_retina'
     # @return [String]
     def profile_banner_uri(size = :web)
-      parse_encoded_uri(insecure_uri([@attrs[:profile_banner_url], size].join('/'))) unless @attrs[:profile_banner_url].nil?
+      parse_encoded_uri(insecure_uri([@attrs['profile_banner_url'], size].join('/'))) unless @attrs['profile_banner_url'].nil?
     end
     alias_method :profile_banner_url, :profile_banner_uri
 
@@ -35,13 +35,13 @@ module Twitter
     # @param size [String, Symbol] The size of the image. Must be one of: 'mobile', 'mobile_retina', 'web', 'web_retina', 'ipad', or 'ipad_retina'
     # @return [String]
     def profile_banner_uri_https(size = :web)
-      parse_encoded_uri([@attrs[:profile_banner_url], size].join('/')) unless @attrs[:profile_banner_url].nil?
+      parse_encoded_uri([@attrs['profile_banner_url'], size].join('/')) unless @attrs['profile_banner_url'].nil?
     end
     alias_method :profile_banner_url_https, :profile_banner_uri_https
 
     # @return [Boolean]
     def profile_banner_uri?
-      !!@attrs[:profile_banner_url]
+      !!@attrs['profile_banner_url']
     end
     memoize :profile_banner_uri?
     alias_predicate_uri_methods :profile_banner_uri?
@@ -51,7 +51,7 @@ module Twitter
     # @param size [String, Symbol] The size of the image. Must be one of: 'mini', 'normal', 'bigger' or 'original'
     # @return [String]
     def profile_image_uri(size = :normal)
-      parse_encoded_uri(insecure_uri(profile_image_uri_https(size))) unless @attrs[:profile_image_url_https].nil?
+      parse_encoded_uri(insecure_uri(profile_image_uri_https(size))) unless @attrs['profile_image_url_https'].nil?
     end
     alias_method :profile_image_url, :profile_image_uri
 
@@ -66,13 +66,13 @@ module Twitter
       # https://a0.twimg.com/profile_images/1759857427/image1326743606.png
       # https://a0.twimg.com/profile_images/1759857427/image1326743606_mini.png
       # https://a0.twimg.com/profile_images/1759857427/image1326743606_bigger.png
-      parse_encoded_uri(@attrs[:profile_image_url_https].sub(PROFILE_IMAGE_SUFFIX_REGEX, profile_image_suffix(size))) unless @attrs[:profile_image_url_https].nil?
+      parse_encoded_uri(@attrs['profile_image_url_https'].sub(PROFILE_IMAGE_SUFFIX_REGEX, profile_image_suffix(size))) unless @attrs['profile_image_url_https'].nil?
     end
     alias_method :profile_image_url_https, :profile_image_uri_https
 
     # @return [Boolean]
     def profile_image_uri?
-      !!@attrs[:profile_image_url_https]
+      !!@attrs['profile_image_url_https']
     end
     memoize :profile_image_uri?
     alias_predicate_uri_methods :profile_image_uri?

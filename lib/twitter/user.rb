@@ -54,7 +54,7 @@ module Twitter
 
       def define_entity_uris_method(key1, key2)
         define_method(key1) do ||
-          @attrs.fetch(:entities, {}).fetch(key2, {}).fetch(:urls, []).collect do |url|
+          @attrs.fetch('entities', {}).fetch(key2.to_s, {}).fetch('urls', []).collect do |url|
             Entity::URI.new(url)
           end
         end
@@ -74,7 +74,7 @@ module Twitter
 
     # @return [Boolean]
     def entities?
-      !@attrs[:entities].nil? && @attrs[:entities].any? { |_, hash| hash[:urls].any? }
+      !@attrs['entities'].nil? && @attrs['entities'].any? { |_, hash| hash['urls'].any? }
     end
     memoize :entities?
 
@@ -90,13 +90,13 @@ module Twitter
       if website_urls?
         website_urls.first.expanded_url
       else
-        Addressable::URI.parse(@attrs[:url])
+        Addressable::URI.parse(@attrs['url'])
       end
     end
     memoize :website
 
     def website?
-      !!(website_uris? || @attrs[:url])
+      !!(website_uris? || @attrs['url'])
     end
     memoize :website?
   end

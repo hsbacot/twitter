@@ -17,13 +17,10 @@ module Twitter
       # @option options [Boolean, String, Integer] :possibly_sensitive Set to true for content which may not be suitable for every audience.
       def upload(media, options = {})
         fail(Twitter::Error::UnacceptableIO.new) unless media.respond_to?(:to_io)
-        url_prefix = 'https://upload.twitter.com'
-        path = '/1.1/media/upload.json'
-        conn = connection.dup
-        conn.url_prefix = url_prefix
-        headers = request_headers(:post, url_prefix + path, options)
+        uri = 'https://upload.twitter.com/1.1/media/upload.json'
+        headers = {:authorization => oauth_auth_header(:post, uri, options).to_s}
         options.merge!(:media => media)
-        conn.post(path, options) { |request| request.headers.update(headers) }.env.body[:media_id]
+        HTTP.with(headers).post(uri, :form => options).parse['media_id']
       end
     end
   end

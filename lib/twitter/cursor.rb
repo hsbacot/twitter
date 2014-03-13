@@ -18,7 +18,7 @@ module Twitter
     # @param request [Twitter::Request]
     # @return [Twitter::Cursor]
     def initialize(attrs, key, klass, request)
-      @key = key.to_sym
+      @key = key.to_s
       @klass = klass
       @client = request.client
       @request_method = request.verb
@@ -32,7 +32,7 @@ module Twitter
 
     # @return [Integer]
     def next_cursor
-      @attrs[:next_cursor] || -1
+      @attrs['next_cursor'] || -1
     end
     alias_method :next, :next_cursor
 

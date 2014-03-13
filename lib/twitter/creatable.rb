@@ -9,13 +9,13 @@ module Twitter
     #
     # @return [Time]
     def created_at
-      Time.parse(@attrs[:created_at]) unless @attrs[:created_at].nil?
+      Time.parse(@attrs['created_at']) unless @attrs['created_at'].nil?
     end
     memoize :created_at
 
     # @return [Boolean]
     def created?
-      !!@attrs[:created_at]
+      !!@attrs['created_at']
     end
     memoize :created?
   end

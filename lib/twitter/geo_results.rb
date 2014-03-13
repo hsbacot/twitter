@@ -16,14 +16,14 @@ module Twitter
     # @return [Twitter::GeoResults]
     def initialize(attrs = {})
       @attrs = attrs
-      @collection = @attrs[:result].fetch(:places, []).collect do |place|
+      @collection = @attrs['result'].fetch('places', []).collect do |place|
         Place.new(place)
       end
     end
 
     # @return [String]
     def token
-      @attrs[:token]
+      @attrs['token']
     end
   end
 end

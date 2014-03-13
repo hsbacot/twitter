@@ -82,7 +82,7 @@ describe Twitter::REST::Favorites do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.unfavorite(tweet)
         expect(a_post('/1.1/favorites/destroy.json').with(:body => {:id => '25938088801'})).to have_been_made
       end
@@ -126,7 +126,7 @@ describe Twitter::REST::Favorites do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.favorite(tweet)
         expect(a_post('/1.1/favorites/create.json').with(:body => {:id => '25938088801'})).to have_been_made
       end
@@ -178,7 +178,7 @@ describe Twitter::REST::Favorites do
     end
     context 'with a Tweet passed' do
       it 'requests the correct resource' do
-        tweet = Twitter::Tweet.new(:id => 25_938_088_801)
+        tweet = Twitter::Tweet.new('id' => 25_938_088_801)
         @client.favorite!(tweet)
         expect(a_post('/1.1/favorites/create.json').with(:body => {:id => '25938088801'})).to have_been_made
       end

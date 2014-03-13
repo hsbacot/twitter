@@ -29,11 +29,11 @@ module Twitter
       klass.new(perform)
     end
 
-    # @param collection_name [Symbol]
+    # @param collection_name [String, Symbol]
     # @param klass [Class]
     # @return [Twitter::Cursor]
     def perform_with_cursor(collection_name, klass = nil)
-      Twitter::Cursor.new(perform, collection_name.to_sym, klass, self)
+      Twitter::Cursor.new(perform, collection_name.to_s, klass, self)
     end
 
     # @param klass [Class]

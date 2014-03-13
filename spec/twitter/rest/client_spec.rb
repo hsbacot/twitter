@@ -65,52 +65,6 @@ describe Twitter::REST::Client do
     end
   end
 
-  describe '#connection_options=' do
-    it 'sets connection options' do
-      capture_warning do
-        @client.connection_options = 'connection options'
-      end
-      expect(@client.connection_options).to eq('connection options')
-    end
-    it 'outputs a warning' do
-      warning = capture_warning do
-        @client.connection_options = nil
-      end
-      expect(warning).to match(/\[DEPRECATION\] Twitter::REST::Client#connection_options= is deprecated and will be removed in version 6\.0\.0\.$/)
-    end
-  end
-
-  describe '#connection_options' do
-    it 'returns the connection options hash with proxy and user_agent' do
-      client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = 'CK'
-        config.consumer_secret     = 'CS'
-        config.access_token        = 'AT'
-        config.access_token_secret = 'ATS'
-        config.proxy               = 'http://localhost:99'
-        config.user_agent          = 'My Twitter Ruby Gem'
-      end
-
-      expect(client.connection_options[:proxy]).to eql('http://localhost:99')
-      expect(client.connection_options[:headers][:user_agent]).to eql('My Twitter Ruby Gem')
-    end
-  end
-
-  describe '#middleware=' do
-    it 'sets middleware' do
-      capture_warning do
-        @client.middleware = 'middleware'
-      end
-      expect(@client.middleware).to eq 'middleware'
-    end
-    it 'outputs a warning' do
-      warning = capture_warning do
-        @client.middleware = nil
-      end
-      expect(warning).to match(/\[DEPRECATION\] Twitter::REST::Client#middleware= is deprecated and will be removed in version 6\.0\.0\.$/)
-    end
-  end
-
   describe '#credentials?' do
     it 'returns true if all credentials are present' do
       client = Twitter::REST::Client.new(:consumer_key => 'CK', :consumer_secret => 'CS', :access_token => 'AT', :access_token_secret => 'AS')
@@ -175,7 +129,7 @@ describe Twitter::REST::Client do
       expect(authorization).to eq('Bearer BT')
     end
     it 'creates the correct auth headers with supplied bearer token' do
-      token = Twitter::Token.new(:token_type => 'bearer', :access_token => 'BT')
+      token = Twitter::Token.new('token_type' => 'bearer', 'access_token' => 'BT')
       client = Twitter::REST::Client.new(:bearer_token => token)
       authorization = client.send(:bearer_auth_header)
       expect(authorization).to eq('Bearer BT')

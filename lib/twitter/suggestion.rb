@@ -8,7 +8,7 @@ module Twitter
 
     # @return [Array<Twitter::User>]
     def users
-      @attrs.fetch(:users, []).collect do |user|
+      @attrs.fetch('users', []).collect do |user|
         User.new(user)
       end
     end

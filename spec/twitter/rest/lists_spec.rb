@@ -319,7 +319,7 @@ describe Twitter::REST::Lists do
         stub_get('/1.1/lists/subscribers/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678', :user_id => '813286'}).to_return(:body => fixture('sferik.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        list = Twitter::List.new(:id => 12_345_678, :user => {:id => 7_505_382, :screen_name => 'sferik'})
+        list = Twitter::List.new('id' => 12_345_678, 'user' => {'id' => 7_505_382, 'screen_name' => 'sferik'})
         @client.list_subscriber?(list, 813_286)
         expect(a_get('/1.1/lists/subscribers/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678', :user_id => '813286'})).to have_been_made
       end
@@ -458,7 +458,7 @@ describe Twitter::REST::Lists do
         stub_get('/1.1/lists/members/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678', :user_id => '813286'}).to_return(:body => fixture('list.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        list = Twitter::List.new(:id => 12_345_678, :user => {:id => 7_505_382, :screen_name => 'sferik'})
+        list = Twitter::List.new('id' => 12_345_678, 'user' => {'id' => 7_505_382, 'screen_name' => 'sferik'})
         @client.list_member?(list, 813_286)
         expect(a_get('/1.1/lists/members/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678', :user_id => '813286'})).to have_been_made
       end
@@ -622,7 +622,7 @@ describe Twitter::REST::Lists do
         stub_post('/1.1/lists/destroy.json').with(:body => {:owner_id => '7505382', :list_id => '12345678'}).to_return(:body => fixture('list.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        list = Twitter::List.new(:id => '12345678', :user => {:id => 7_505_382, :screen_name => 'sferik'})
+        list = Twitter::List.new('id' => '12345678', 'user' => {'id' => 7_505_382, 'screen_name' => 'sferik'})
         @client.destroy_list(list)
         expect(a_post('/1.1/lists/destroy.json').with(:body => {:owner_id => '7505382', :list_id => '12345678'})).to have_been_made
       end
@@ -669,7 +669,7 @@ describe Twitter::REST::Lists do
         stub_post('/1.1/lists/update.json').with(:body => {:owner_id => '7505382', :list_id => '12345678', :description => 'Presidents of the United States of America'}).to_return(:body => fixture('list.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        list = Twitter::List.new(:id => '12345678', :user => {:id => 7_505_382, :screen_name => 'sferik'})
+        list = Twitter::List.new('id' => '12345678', 'user' => {'id' => 7_505_382, 'screen_name' => 'sferik'})
         @client.list_update(list, :description => 'Presidents of the United States of America')
         expect(a_post('/1.1/lists/update.json').with(:body => {:owner_id => '7505382', :list_id => '12345678', :description => 'Presidents of the United States of America'})).to have_been_made
       end
@@ -720,7 +720,7 @@ describe Twitter::REST::Lists do
         stub_get('/1.1/lists/show.json').with(:query => {:owner_id => '12345678', :slug => 'presidents'}).to_return(:body => fixture('list.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        user = Twitter::User.new(:id => '12345678')
+        user = Twitter::User.new('id' => '12345678')
         @client.list(user, 'presidents')
         expect(a_get('/1.1/lists/show.json').with(:query => {:owner_id => '12345678', :slug => 'presidents'})).to have_been_made
       end
@@ -750,7 +750,7 @@ describe Twitter::REST::Lists do
         stub_get('/1.1/lists/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678'}).to_return(:body => fixture('list.json'), :headers => {:content_type => 'application/json; charset=utf-8'})
       end
       it 'requests the correct resource' do
-        list = Twitter::List.new(:id => '12345678', :user => {:id => 7_505_382, :screen_name => 'sferik'})
+        list = Twitter::List.new('id' => '12345678', 'user' => {'id' => 7_505_382, 'screen_name' => 'sferik'})
         @client.list(list)
         expect(a_get('/1.1/lists/show.json').with(:query => {:owner_id => '7505382', :list_id => '12345678'})).to have_been_made
       end

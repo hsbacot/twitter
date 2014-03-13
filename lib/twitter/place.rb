@@ -17,25 +17,25 @@ module Twitter
     # @raise [ArgumentError] Error raised when supplied argument is missing a :woeid key.
     # @return [Twitter::Place]
     def initialize(attrs = {})
-      attrs[:id] ||= attrs[:woeid]
+      attrs['id'] ||= attrs['woeid']
       super
     end
 
     # @return [String]
     def country_code
-      @attrs[:country_code] || @attrs[:countryCode] # rubocop:disable SymbolName
+      @attrs['country_code'] || @attrs['countryCode']
     end
     memoize :country_code
 
     # @return [Integer]
     def parent_id
-      @attrs[:parentid]
+      @attrs['parentid']
     end
     memoize :parent_id
 
     # @return [String]
     def place_type
-      @attrs[:place_type] || @attrs[:placeType] && @attrs[:placeType][:name] # rubocop:disable SymbolName
+      @attrs['place_type'] || @attrs['placeType'] && @attrs['placeType']['name']
     end
     memoize :place_type
   end

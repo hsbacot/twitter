@@ -21,7 +21,7 @@ module Twitter
     # @return [Twitter::TrendResults]
     def initialize(attrs = {})
       @attrs = attrs
-      @collection = @attrs.fetch(:trends, []).collect do |trend|
+      @collection = @attrs.fetch('trends', []).collect do |trend|
         Trend.new(trend)
       end
     end
@@ -30,24 +30,24 @@ module Twitter
     #
     # @return [Time]
     def as_of
-      Time.parse(@attrs[:as_of]) unless @attrs[:as_of].nil?
+      Time.parse(@attrs['as_of']) unless @attrs['as_of'].nil?
     end
     memoize :as_of
 
     def as_of?
-      !!@attrs[:as_of]
+      !!@attrs['as_of']
     end
     memoize :as_of?
 
     # @return [Twitter::Place, NullObject]
     def location
-      location? ? Place.new(@attrs[:locations].first) : NullObject.new
+      location? ? Place.new(@attrs['locations'].first) : NullObject.new
     end
     memoize :location
 
     # @return [Boolean]
     def location?
-      !@attrs[:locations].nil? && !@attrs[:locations].first.nil?
+      !@attrs['locations'].nil? && !@attrs['locations'].first.nil?
     end
     memoize :location?
   end

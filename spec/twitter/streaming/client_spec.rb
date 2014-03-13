@@ -86,7 +86,7 @@ describe Twitter::Streaming::Client do
       it 'returns an arary of Tweets' do
         @client.connection = FakeConnection.new(fixture('track_streaming.json'))
         objects = []
-        user = Twitter::User.new(:id => 7_505_382)
+        user = Twitter::User.new('id' => 7_505_382)
         @client.site(user) do |object|
           objects << object
         end
@@ -112,7 +112,7 @@ describe Twitter::Streaming::Client do
       expect(objects[2]).to be_a Twitter::DirectMessage
       expect(objects[2].text).to eq('hello bot')
       expect(objects[3]).to be_a Twitter::Streaming::Event
-      expect(objects[3].name).to eq(:follow)
+      expect(objects[3].name).to eq('follow')
       expect(objects[4]).to be_a Twitter::Streaming::DeletedTweet
       expect(objects[4].id).to eq(272_691_609_211_117_568)
       expect(objects[5]).to be_a Twitter::Streaming::StallWarning
